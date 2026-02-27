@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin</title>
+  <style>
+    :root {
+      --bg: #f3f5f4;
+      --card: #ffffff;
+      --text: #1a242b;
+      --muted: #5b6b74;
+      --border: #d9e1e5;
+      --accent: #0f766e;
+      --accent-2: #115e59;
+      --soft: #ecf3f4;
+      --danger: #b42318;
+      --danger-bg: #fef3f2;
+      --ok: #067647;
+      --ok-bg: #ecfdf3;
+      --shadow: 0 30px 50px -38px rgba(0, 0, 0, 0.4);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 8% 14%, #deefeb 0%, rgba(222,239,235,0) 45%),
+        radial-gradient(circle at 92% 88%, #e9efea 0%, rgba(233,239,234,0) 45%),
+        var(--bg);
+      padding: 20px;
+    }
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+    .meta { color: var(--muted); font-size: 0.88rem; }
+    .badges { display: flex; gap: 10px; align-items: center; }
+    .pill {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      color: #37505d;
+    }
+    .notice {
+      border-radius: 10px;
+      border: 1px solid;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+    }
+    .success { color: var(--ok); background: var(--ok-bg); border-color: #a6f4c5; }
+    .error { color: var(--danger); background: var(--danger-bg); border-color: #fecdca; }
+
+    label { display: block; font-size: 0.9rem; color: #33424d; }
+    input[type="text"], input[type="url"], input[type="password"] {
+      margin-top: 6px;
+      width: 100%;
+      padding: 10px 11px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background: #fcfdfd;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(15,118,110,0.16);
+    }
+    .grid-2 { display: grid; grid-template-columns: 1.2fr .8fr; gap: 10px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      background: #fff;
+    }
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+    .btn-ghost {
+      border-color: var(--border);
+      color: #33434e;
+      background: #fff;
+    }
+    .btn-danger {
+      border-color: #fecaca;
+      color: #991b1b;
+      background: #fff;
+    }
+    .btn:hover { filter: brightness(0.97); }
+    .btn-ghost:hover {
+      background: #edf2f4;
+      border-color: #c6d2d8;
+    }
+    .btn:disabled {
+      cursor: not-allowed;
+      color: #93a1aa;
+      border-color: #d9e1e5;
+      background: #f3f6f7;
+      filter: none;
+    }
+
+    .links-list {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .link-row {
+      display: grid;
+      grid-template-columns: 70px 140px minmax(260px, 2fr) 120px 84px 84px;
+      gap: 8px;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #e7edf0;
+      background: #fff;
+    }
+    .link-row:last-child { border-bottom: 0; }
+    .link-row.head {
+      background: #f8fafb;
+      color: #3f5563;
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+    .link-row input {
+      margin-top: 0;
+      padding: 8px 9px;
+      font-size: 0.88rem;
+    }
+    .link-row .clicks { text-align: center; }
+    .short {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.86rem;
+      color: #2f4a57;
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 4px 7px;
+      display: inline-block;
+      margin-top: 6px;
+    }
+    .pagination {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: max-content max-content max-content;
+      gap: 8px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .links-list { border: 0; }
+      .link-row, .link-row.head {
+        grid-template-columns: 1fr;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 10px;
+      }
+      .link-row.head { display: none; }
+      .link-row .clicks { text-align: left; }
+      .pagination { grid-template-columns: max-content max-content max-content; }
+      body { padding: 14px; }
+      .panel { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="panel topbar">
+      <h1>Link Management</h1>
+      <div class="badges">
+        <span class="pill">Logged in as {{.Username}}</span>
+        <form class="inline" action="{{.BasePath}}/logout" method="get"><button class="btn btn-ghost" type="submit">Logout</button></form>
+      </div>
+    </div>
+
+    {{if .Success}}<div class="panel notice success">{{.Success}}</div>{{end}}
+    {{if .Error}}<div class="panel notice error">{{.Error}}</div>{{end}}
+
+    <div class="panel">
+      <h2>Create New Shortlink</h2>
+      <form action="{{.BasePath}}/admin/links/create?page={{.Page}}{{if .Search}}&q={{.Search}}{{end}}" method="post">
+        <div class="grid-2">
+          <label>Long URL
+            <input type="url" name="long_url" placeholder="https://example.com" required>
+          </label>
+          <label>Short code (optional)
+            <input type="text" name="short_code" placeholder="">
+          </label>
+        </div>
+        <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <button class="btn btn-primary" type="submit">Create Link</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="panel">
+      <h2>Links (Page {{.Page}} / {{.TotalPages}})</h2>
+      <div class="meta" style="margin-bottom:10px;">Showing {{.ResultCount}} result(s), total links: {{.TotalLinks}}</div>
+      <form action="{{.BasePath}}/admin" method="get" style="margin-bottom:10px; display:flex; gap:8px;">
+        <input type="text" name="q" value="{{.Search}}" placeholder="Search code or URL">
+        <button class="btn btn-ghost" type="submit">Search</button>
+      </form>
+      <div class="links-list">
+        <div class="link-row head">
+          <div>ID</div>
+          <div>Code</div>
+          <div>Long URL</div>
+          <div class="clicks">Clicks</div>
+          <div>Save</div>
+          <div>Delete</div>
+        </div>
+        {{range .Links}}
+        <form class="link-row" action="{{$.BasePath}}/admin/links/update?page={{$.Page}}{{if $.Search}}&q={{$.Search}}{{end}}" method="post">
+          <input type="hidden" name="id" value="{{.ID}}">
+          <div>{{.ID}}</div>
+          <div><input type="text" name="short_code" value="{{.ShortCode}}" required></div>
+          <div><input type="url" name="long_url" value="{{.LongURL}}" required></div>
+          <div class="clicks">{{.Clicks}}</div>
+          <div><button class="btn btn-primary" type="submit">Save</button></div>
+          <div>
+            <button class="btn btn-danger" type="submit" formaction="{{$.BasePath}}/admin/links/delete?page={{$.Page}}{{if $.Search}}&q={{$.Search}}{{end}}" onclick="return confirm('Delete this link?');">Delete</button>
+          </div>
+        </form>
+        {{else}}
+        <div class="link-row"><div>No links yet.</div></div>
+        {{end}}
+      </div>
+
+      <div class="pagination">
+        <a href="{{.BasePath}}/admin?page={{.Page}}{{if .Search}}&q={{.Search}}{{end}}"><button class="btn btn-ghost" type="button">Refresh</button></a>
+        {{if .HasPrev}}
+        <a href="{{.BasePath}}/admin?page={{.PrevPage}}{{if .Search}}&q={{.Search}}{{end}}"><button class="btn btn-ghost" type="button">Prev</button></a>
+        {{else}}
+        <button class="btn btn-ghost" type="button" disabled>Prev</button>
+        {{end}}
+        {{if .HasNext}}
+        <a href="{{.BasePath}}/admin?page={{.NextPage}}{{if .Search}}&q={{.Search}}{{end}}"><button class="btn btn-ghost" type="button">Next</button></a>
+        {{else}}
+        <button class="btn btn-ghost" type="button" disabled>Next</button>
+        {{end}}
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Change Password</h2>
+      <form action="{{.BasePath}}/admin/password?page={{.Page}}{{if .Search}}&q={{.Search}}{{end}}" method="post">
+        <div class="grid-3">
+          <label>Current password
+            <input type="password" name="current_password" required>
+          </label>
+          <label>New password
+            <input type="password" name="new_password" required>
+          </label>
+          <label>Confirm new password
+            <input type="password" name="confirm_password" required>
+          </label>
+        </div>
+        <div style="margin-top:10px;">
+          <button class="btn btn-primary" type="submit">Change Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login</title>
+  <style>
+    :root {
+      --bg: #f3f5f4;
+      --card: #ffffff;
+      --text: #172026;
+      --muted: #5c6b76;
+      --border: #d8dfe3;
+      --accent: #0f766e;
+      --accent-2: #115e59;
+      --danger-bg: #fee2e2;
+      --danger: #991b1b;
+      --shadow: 0 20px 40px -26px rgba(0, 0, 0, 0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, #d6ebe8 0%, rgba(214,235,232,0) 55%),
+        radial-gradient(circle at 80% 85%, #e5ece8 0%, rgba(229,236,232,0) 60%),
+        var(--bg);
+      padding: 20px;
+    }
+    .card {
+      width: min(420px, 100%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+    .eyebrow {
+      font-size: 0.77rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+    h1 {
+      margin: 0 0 20px;
+      font-size: 1.5rem;
+      line-height: 1.2;
+    }
+    .error {
+      margin: 0 0 16px;
+      border: 1px solid #fecaca;
+      background: var(--danger-bg);
+      color: var(--danger);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+      color: #33424e;
+    }
+    input {
+      width: 100%;
+      margin-top: 6px;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.96rem;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      background: #fcfdfd;
+    }
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(15,118,110,0.18);
+    }
+    button {
+      margin-top: 4px;
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.96rem;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.05); }
+    .foot {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p class="eyebrow">URL Shortener</p>
+
+    <form action="{{.BasePath}}/login" method="post">
+      <label>Username
+        <input type="text" name="username" required autocomplete="username">
+      </label>
+      <label>Password
+        <input type="password" name="password" required autocomplete="current-password">
+      </label>
+      {{if .Error}}<div class="error">{{.Error}}</div>{{end}}
+      <button type="submit">Log In</button>
+    </form>
+  </div>
+</body>
+</html>
